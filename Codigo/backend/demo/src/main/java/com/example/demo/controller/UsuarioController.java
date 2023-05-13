@@ -27,9 +27,9 @@ public class UsuarioController {
         return usuarioService.listarTodos();
     }
 
-    @GetMapping("/asesores")
-    public List<Usuario> listarPorUsuariosAsesores(){
-        return usuarioService.listarUsuariosAsesores();
+    @GetMapping("/roles/{roles}")
+    public List<Usuario> listarPorPorRoles(@PathVariable("roles") String roles){
+        return usuarioService.listarUsuariosPorRoles(roles);
     }
     
     @GetMapping("/{id}")

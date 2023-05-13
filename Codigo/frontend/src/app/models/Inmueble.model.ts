@@ -6,7 +6,5 @@ export interface Inmueble {
     usuarioComprador: Usuario,
     vendedorEncargado: Usuario,
     precio: number,
-    estado: string,
-    idUsuarioComprador:number,
-    idUsuarioVendedor:number    
+    estado: string   
 }

@@ -2,29 +2,31 @@
     <form (ngSubmit)="Actualizar(nuevoInmuebleForm.value)" #nuevoInmuebleForm="ngForm">
         <div class="mb-3">
             <label for="input-nombre" class="form-label">Tipo</label>
-            <input type="text" class="form-control" name="tipo" id="input-nombre" placeholder="Nombre" ngModel required>
-            <input type="hidden" class="form-control" name="estado" value="A" [(ngModel)]="inmueble.tipo">
+            <input type="text" class="form-control" name="tipo" [(ngModel)]="inmueble.tipo" required>
+            <input type="hidden" name="id" [(ngModel)]="inmueble.id" />
         </div>
         <div class="mb-3">
             <label for="input-apellido" class="form-label">Precio</label>
-            <input type="number" class="form-control" name="precio" id="input-apellido" placeholder="Precio" [(ngModel)]="inmueble.precio" 
+            <input type="number" class="form-control" name="precio" placeholder="Precio" [(ngModel)]="inmueble.precio" 
                 required>
         </div>
         <div class="mb-3">
             <label for="input-roles" class="form-label">Vendedor encargado:</label>
-            <select class="form-select" name="idUsuarioVendedor" id="input-roles" [(ngModel)]="inmueble.vendedorEncargado">
-                <option *ngFor="let usuarioAsesor of usuariosAsesores" [value]="usuarioAsesor.id">{{ usuarioAsesor.nombre }} {{ usuarioAsesor.apellido}}</option>
+            <select class="form-select" name="vendedorEncargado" [(ngModel)]="inmueble.vendedorEncargado">
+                <option *ngFor="let usuarioAsesor of usuariosAsesores" [value]="toJson(usuarioAsesor)">{{ usuarioAsesor.nombre }} {{ usuarioAsesor.apellido}}</option>
+                <option  value={{inmueble.vendedorEncargado}} disabled>{{ inmueble.vendedorEncargado.nombre }} {{ inmueble.vendedorEncargado.apellido}}</option>
             </select>
         </div>
         <div class="mb-3">
             <label for="input-roles" class="form-label">Cliente interesado:</label>
-            <select class="form-select" name="idUsuarioVendedor" id="input-roles" [(ngModel)]="inmueble.usuarioComprador">
-                <option *ngFor="let usuarioCliente of usuariosCompradores" [value]="usuarioCliente.id">{{ usuarioCliente.nombre }} {{ usuarioCliente.apellido}}</option>
+            <select class="form-select" name="usuarioComprador" [(ngModel)]="inmueble.usuarioComprador">
+                <option *ngFor="let usuarioCliente of usuariosCompradores"  [value]="toJson(usuarioCliente)">{{ usuarioCliente.nombre }} {{ usuarioCliente.apellido}}</option>
+                <option  [value]="inmueble.usuarioComprador" disabled>{{ inmueble.usuarioComprador.nombre }} {{ inmueble.usuarioComprador.apellido}}</option>
             </select>
         </div>
         <div class="mb-3">
             <label for="input-estado" class="form-label">Estado</label>
-            <select class="form-select" name="estado" id="input-estado" [(ngModel)]="inmueble.estado">
+            <select class="form-select" name="estado" [value]="inmueble.estado" [(ngModel)]="inmueble.estado">
               <option value="D">Disponible</option>
               <option value="I">En proceso de compra</option>
             </select>
@@ -34,4 +36,7 @@
             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
         </div>
     </form>
+    <button type="button" class="btn btn-info" (click)="volver()">
+        Volver
+      </button>
 </div>

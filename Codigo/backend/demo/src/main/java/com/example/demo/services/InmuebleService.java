@@ -19,26 +19,21 @@ public class InmuebleService {
     private UsuarioRepository usuarioRepository;
 
     public Inmueble insertar (Inmueble inmueble){
-        Optional<Usuario> optionalVendedor = usuarioRepository.findById(inmueble.getVendedorEncargado().getId());
+        // Optional<Usuario> optionalVendedor = usuarioRepository.findById(inmueble.getVendedorEncargado().getId());
 
-        inmueble.setVendedorEncargado(optionalVendedor.get());
+        // inmueble.setVendedorEncargado(optionalVendedor.get());
         return inmuebleRepository.save(inmueble);        
     }
 
     public Inmueble actualizar(Long id, Inmueble inmueble) {
         Optional<Inmueble> optionalInmueble = inmuebleRepository.findById(id);
 
-        Optional<Usuario> optionalVendedor = usuarioRepository.findById(inmueble.getVendedorEncargado().getId());
-        Optional<Usuario> optionalComprador = usuarioRepository.findById(inmueble.getUsuarioComprador().getId());
-        
-        inmueble.setUsuarioComprador(optionalComprador.get());
-        inmueble.setVendedorEncargado(optionalVendedor.get());
-
         if (optionalInmueble.isEmpty()) {
             return null;
         }
         Inmueble inmuebleEditado = optionalInmueble.get();
         copiarCamposNoNulos(inmueble, inmuebleEditado);
+
         return inmuebleRepository.save(inmuebleEditado);
     }
     

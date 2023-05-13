@@ -68,7 +68,7 @@ public class UsuarioService {
         }
     }
 
-    public List<Usuario> listarUsuariosAsesores() {
-        return usuarioRepository.findByRoles("ROLE_ASESOR");
+    public List<Usuario> listarUsuariosPorRoles(String roles) {
+        return usuarioRepository.findByRoles(roles);
     }
 }

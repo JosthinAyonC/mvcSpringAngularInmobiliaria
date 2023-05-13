@@ -12,31 +12,34 @@ import { Usuario } from 'src/app/models/Usuario.model';
 export class NuevoInmuebleComponent {
   @Output() inmuebleGuardado = new EventEmitter<Inmueble>();
 
+  usuariosAsesores: Usuario[] = [];
   usuarioVendedor!: Usuario;
-  constructor(
-    private inmuebleService: InmuebleServiceService, private usuarioService: UsuarioServiceService
-  ) {}
+  constructor(private inmuebleService: InmuebleServiceService, private usuarioService: UsuarioServiceService) {}
+
+  toJson(obj: any) {
+    return JSON.stringify(obj);
+  }
+
+
 
   guardar(inmueble: Inmueble) {
     if (
       inmueble.tipo == '' ||
-      inmueble.precio== null
+      inmueble.precio== null ||
+      inmueble.vendedorEncargado.toString() == '' 
       ) {
         alert('Debe llenar todos los campos');
       } else {
       inmueble.estado = "D";    
-      this.usuarioService.obtenerUnUsuario(inmueble.idUsuarioVendedor).subscribe((data: Usuario) =>{
-        inmueble.vendedorEncargado = data;
-      });
+      inmueble.vendedorEncargado = JSON.parse(inmueble.vendedorEncargado.toString());
       this.inmuebleService.crearNuevo(inmueble).subscribe(() => {
         this.inmuebleGuardado.emit(inmueble);
         alert('Inmueble creado');
       });
     }
   }
-  usuariosAsesores: Usuario[] = [];
   ngOnInit() {
-    this.usuarioService.obtenerAsesores()
+    this.usuarioService.obtenerPorRoles("ROLE_ASESOR")
     .subscribe((data: Usuario[]) => {
       this.usuariosAsesores = data.filter((usuario: Usuario) => usuario.estado);
     });

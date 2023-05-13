@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../models/Usuario.model';
 
@@ -25,7 +25,7 @@ export class UsuarioServiceService {
   updateUsuario(id:number ,usuario: Usuario){
     return this.http.put<Usuario>(`http://localhost:8080/api/usuario/editar/${id}`, usuario);
   }
-  obtenerAsesores(){
-    return this.http.get<Usuario[]>(`http://localhost:8080/api/usuario/asesores`);
+  obtenerPorRoles(roles: string) {
+    return this.http.get<Usuario[]>(`http://localhost:8080/api/usuario/roles/${roles}`);
   }
 }

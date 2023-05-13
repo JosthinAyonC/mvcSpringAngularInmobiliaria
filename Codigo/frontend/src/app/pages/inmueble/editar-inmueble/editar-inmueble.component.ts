@@ -17,18 +17,22 @@ export class EditarInmuebleComponent {
 
   usuariosAsesores: Usuario[] = [];
   usuariosCompradores: Usuario[] = [];
+  inmuebleAEditar!: Inmueble;
+
+  toJson(obj: any) {
+    return JSON.stringify(obj);
+  }
 
   ngOnInit() {
-    this.usuarioService.obtenerAsesores()
+    this.usuarioService.obtenerPorRoles("ROLE_ASESOR")
     .subscribe((data: Usuario[]) => {
       this.usuariosAsesores = data.filter((usuario: Usuario) => usuario.estado);
     });
-    this.usuarioService.obtenerAsesores()
+    this.usuarioService.obtenerPorRoles("ROLE_CLIENTE")
     .subscribe((data: Usuario[]) => {
       this.usuariosCompradores = data.filter((usuario: Usuario) => usuario.estado);
     });
     this.Editar();
-    console.log(this.inmueble);
   }
 
   Editar(){
@@ -38,13 +42,25 @@ export class EditarInmuebleComponent {
       this.inmueble=data;
     })    
   }
+  
+  Actualizar(inmueble :Inmueble) :void { 
+    if (inmueble.usuarioComprador.toString() == '' || inmueble.vendedorEncargado.toString() == '') {
+      alert('Seleccione los usuarios');
+      return;
+    }
+    try {
+      inmueble.usuarioComprador = JSON.parse(inmueble.usuarioComprador.toString());
+      inmueble.vendedorEncargado = JSON.parse(inmueble.vendedorEncargado.toString());
+    } catch (e) {}  
 
-  Actualizar(inmueble :Inmueble) :void {
-    
     this.inmuebleService.updateInmueble(inmueble.id, inmueble)
     .subscribe(data=>{
+      this.inmuebleAEditar=data;
       alert("Se actualizo con exito");
       this.router.navigate(['inmueble']);
     })
+  }
+  volver(){
+    this.router.navigate(['usuario']);
   }
 }
