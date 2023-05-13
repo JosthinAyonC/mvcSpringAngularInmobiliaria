@@ -1,0 +1,50 @@
+<div class="modal-body">
+  <div class="container">
+    <form #actualizarForm="ngForm" (ngSubmit)="Actualizar(actualizarForm.value)">
+      <div class="mb-3">
+        <label for="input-nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="nombre" id="input-nombre" [(ngModel)]="usuario.nombre" required />
+        <input type="hidden" name="id" [(ngModel)]="usuario.id" />
+      </div>
+      <div class="mb-3">
+        <label for="input-apellido" class="form-label">Apellido</label>
+        <input type="text" class="form-control" name="apellido" id="input-apellido" [(ngModel)]="usuario.apellido"
+          required />
+      </div>
+      <div class="mb-3">
+        <label for="input-email" class="form-label">Email address</label>
+        <input type="email" class="form-control" name="correo" id="input-email" [(ngModel)]="usuario.correo" required />
+      </div>
+      <div class="mb-3">
+        <label for="input-clave" class="form-label">Clave</label>
+        <input type="password" class="form-control" name="clave" id="input-clave" placeholder="**************"
+          disabled="true" />
+      </div>
+      <div class="mb-3">
+        <label for="input-roles" class="form-label">Roles</label>
+        <select class="form-select" name="roles" id="input-roles" [(ngModel)]="usuario.roles">
+          <option value="ROLE_ADMIN">ADMINISTRADOR</option>
+          <option value="ROLE_USER" selected>USUARIO</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="input-estado" class="form-label">Estado</label>
+        <select class="form-select" name="estado" id="input-estado" [(ngModel)]="usuario.estado">
+          <option value="A">Activo</option>
+          <option value="I">Inactivo</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+          Guardar
+        </button>
+      </div>
+    </form>
+    <button type="button" class="btn btn-info" (click)="volver()">
+      Volver
+    </button>
+  </div>
+</div>

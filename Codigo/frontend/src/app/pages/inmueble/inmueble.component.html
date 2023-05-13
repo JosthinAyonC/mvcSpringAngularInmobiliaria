@@ -1,0 +1,38 @@
+<div class="container">
+    <button class="btn btn-info m-2"  data-bs-toggle="modal" data-bs-target="#modal-nuevoInmueble">Agregar nuevo</button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tipo de inmueble</th>
+          <th scope="col">Vendedor encargado:</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inmueble of inmuebles; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ inmueble.tipo }}</td>
+          <td>{{ inmueble.vendedorEncargado ? inmueble.vendedorEncargado.nombre + ' ' + inmueble.vendedorEncargado.apellido : 'No asignado aun' }}</td>
+          <td>{{ inmueble.usuarioComprador ? inmueble.usuarioComprador.nombre + ' ' + inmueble.usuarioComprador.apellido : 'No asignado aun' }}</td>
+          <td>{{ inmueble.estado == "D" ? "Disponible": "En proceso de compra" }}</td>
+          <td>{{ inmueble.precio }}</td>
+          <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-confirmacion" (click)="obtenerInmueble(inmueble)">Eliminar</button>
+          <a class="btn btn-secondary" (click)="obtenerInmuebleId(inmueble)">Editar</a></td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <app-nuevo-inmueble (inmuebleGuardado)="onInmuebleGuardado($event)"></app-nuevo-inmueble>
+    
+    <app-modal-confirmx-inmueble 
+    [idInmuebleAEliminar]="inmuebleSeleccionado"
+    (eliminarInmueble)="delete($event)"
+    ></app-modal-confirmx-inmueble>
+     
+  </div>
+  
+  

@@ -1,0 +1,38 @@
+
+<div  class="modal fade" id="modal-nuevoInmueble" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar nuevo inmueble</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <form (ngSubmit)="guardar(nuevoInmuebleForm.value)" #nuevoInmuebleForm="ngForm">
+              <div class="mb-3">
+                <label for="input-nombre" class="form-label">Tipo</label>
+                <input type="text" class="form-control" name="tipo" id="input-nombre" placeholder="Nombre" ngModel required>
+                <input type="hidden" class="form-control" name="estado" value="A" ngModel>
+              </div>
+              <div class="mb-3">
+                <label for="input-apellido" class="form-label">Precio</label>
+                <input type="number" class="form-control" name="precio" id="input-apellido" placeholder="Precio" ngModel required>
+              </div>
+              <div class="mb-3">
+                <label for="input-roles" class="form-label">Vendedor encargado:</label>
+                <select class="form-select" name="idUsuarioVendedor" id="input-roles" ngModel>
+                  <option *ngFor="let usuario of usuariosAsesores" [value]="usuario.id">{{ usuario.nombre }} {{ usuario.apellido }}</option>
+                </select>
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
